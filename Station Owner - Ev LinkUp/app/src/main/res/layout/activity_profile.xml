@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/reviewbackground"
+    tools:context=".ProfileActivity">
+
+
+    <!-- Banner Image -->
+    <ImageView
+        android:id="@+id/bannerImageView"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/gradient"/>
+
+    <!-- Avatar Image -->
+
+    <!-- User Name -->
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/avatarImageView"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_below="@id/bannerImageView"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="59dp"
+        android:layout_marginTop="-81dp"
+        android:layout_marginEnd="232dp"
+
+        android:src="@drawable/payement_avatar"
+        app:shapeAppearanceOverlay="@style/ImageView.roundedRectangle" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bannerImageView"
+        android:layout_marginTop="55dp"
+        android:orientation="vertical"
+        android:paddingHorizontal="24dp">
+
+        <!--name-->
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/cl_green"
+            android:textSize="26sp"
+            android:singleLine="true"
+            android:textStyle="bold" />
+
+        <!--email -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/emailTextViewLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:textAllCaps="true"
+                android:text="Email Address"
+                android:textColor="@color/cl_faint_green"
+                android:textSize="8sp"
+                android:singleLine="true"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_background"
+                android:fontFamily="@font/poppins"
+                android:padding="15sp"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+
+        <!--        station name-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/stationLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:textAllCaps="true"
+                android:text="Station Name"
+                android:textColor="@color/cl_faint_green"
+                android:textSize="8sp"
+                android:singleLine="true"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvStationName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_background"
+
+                android:padding="15sp"
+                android:singleLine="true"
+                android:fontFamily="@font/poppins"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+        <!-- Average Rating -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/ratinglabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:textAllCaps="true"
+                android:text="Average Rating"
+                android:textColor="@color/cl_faint_green"
+                android:textSize="8sp"
+                android:singleLine="true"
+                android:textStyle="bold" />
+            <RatingBar
+                android:id="@+id/tvAvgRating"
+                android:layout_width="wrap_content"
+
+                android:layout_height="20pt"
+                android:numStars="5"
+                android:rating="4.0"
+                android:progressBackgroundTint="@color/white"
+                android:progressTint="@color/cl_green"
+                android:isIndicator="true"/>
+
+
+        </LinearLayout>
+
+
+        <!-- Address -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/addressLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:textAllCaps="true"
+                android:text="Station Address"
+                android:textColor="@color/cl_faint_green"
+                android:textSize="8sp"
+                android:singleLine="true"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:singleLine="false"
+                android:lines="4"
+                android:padding="15sp"
+                android:textColor="@color/white"
+                android:background="@drawable/edittext_background"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+
+
+        <RadioGroup
+            android:id="@+id/rg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/btnType1"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:buttonTint="@color/cl_faint_green"
+                android:text="@string/english"
+                android:textColor="@color/cl_faint_green"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/btnType2"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_marginStart="16dp"
+                android:buttonTint="@color/cl_faint_green"
+                android:text="@string/hindi"
+                android:textColor="@color/cl_faint_green"
+                android:textSize="16sp" />
+
+<!--            <RadioButton-->
+<!--                android:id="@+id/btnType3"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="48dp"-->
+<!--                android:layout_marginStart="16dp"-->
+<!--                android:buttonTint="@color/cl_faint_green"-->
+<!--                android:text="@string/marathi"-->
+<!--                android:textColor="@color/cl_faint_green"-->
+<!--                android:textSize="16sp" />-->
+        </RadioGroup>
+
+
+        <Button
+            android:id="@+id/btnLogout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/gradient"
+            android:backgroundTint="@null"
+            android:fontFamily="@font/poppins_semibold"
+            android:padding="10dp"
+            android:text="@string/logout"
+            android:textAllCaps="false"
+            android:textSize="17dp" />
+
+
+    </LinearLayout>
+
+</RelativeLayout>

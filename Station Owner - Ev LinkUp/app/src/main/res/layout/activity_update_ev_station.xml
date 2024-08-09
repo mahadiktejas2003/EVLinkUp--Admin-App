@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cl_black"
+    android:orientation="vertical"
+    android:padding="20dp"
+    tools:context=".EvStation.UpdateEvStationActivity">
+
+    <!-- Title -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/update_ev_station"
+        android:textColor="@color/cl_green"
+        android:textSize="24sp"
+        android:textStyle="bold"
+
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/poppins_medium"
+        android:text="@string/please_fill_out_the_form_below_to_nupdate_ev_station_information"
+        android:textColor="@color/cl_faint_green"
+        android:textSize="10sp"
+
+        />
+
+
+    <!-- Energy EditText -->
+    <TextView
+        android:id="@+id/emailTextViewLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins"
+        android:singleLine="true"
+        android:text="@string/energy_kilowatts"
+        android:textColor="@color/cl_faint_green"
+        android:textSize="8sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/et_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/edittext_background"
+        android:fontFamily="@font/poppins_medium"
+        android:hint="@string/ex_125_00"
+        android:inputType="numberDecimal"
+        android:padding="12dp"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        android:textColorHint="@color/cl_faint_green"
+        android:textSize="16dp" />
+
+    <!-- Available Toggle Button -->
+    <TextView
+        android:id="@+id/available"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins"
+        android:singleLine="true"
+        android:text="@string/is_this_ev_station_currently_available"
+        android:textAllCaps="true"
+        android:textColor="@color/cl_faint_green"
+        android:textSize="8sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+
+        >
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/poppins"
+            android:text="@string/unavailable"
+            android:textAlignment="center"
+            android:textColor="@color/grey"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/btnAvailable"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+
+            android:layout_marginBottom="20dp"
+            android:checked="false"
+            android:textOff="Unavailable"
+            android:textOn="Available"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/poppins"
+            android:text="@string/available"
+            android:textAlignment="center"
+            android:textColor="@color/cl_faint_green"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+
+    <!-- Type Radio Buttons -->
+    <TextView
+        android:id="@+id/type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins"
+        android:singleLine="true"
+        android:text="@string/select_the_charging_connector_type"
+        android:textAllCaps="true"
+        android:textColor="@color/cl_faint_green"
+        android:textSize="8sp"
+
+        android:textStyle="bold" />
+
+    <RadioGroup
+        android:id="@+id/rg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/btnType1"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:buttonTint="@color/cl_faint_green"
+            android:text="@string/_1"
+            android:textColor="@color/cl_faint_green"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/btnType2"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:buttonTint="@color/cl_faint_green"
+            android:text="@string/_2"
+            android:textColor="@color/cl_faint_green"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/btnType3"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:buttonTint="@color/cl_faint_green"
+            android:text="@string/_3"
+            android:textColor="@color/cl_faint_green"
+            android:textSize="16sp" />
+    </RadioGroup>
+
+    <!-- Update Button -->
+    <Button
+        android:id="@+id/btnUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/gradient"
+        android:backgroundTint="@null"
+        android:fontFamily="@font/poppins_semibold"
+        android:padding="10dp"
+        android:text="@string/update"
+        android:textAllCaps="false"
+        android:textSize="17dp" />
+
+
+</LinearLayout>

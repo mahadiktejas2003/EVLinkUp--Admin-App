@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/edittext_background"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:padding="15dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/avatar_img"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/payement_avatar" />
+
+                <TextView
+                    android:id="@+id/user_name"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/avatar_img"
+                    android:fontFamily="@font/poppins"
+                    android:maxLines="1"
+                    android:paddingLeft="10dp"
+                    android:textColor="@color/white"
+                    android:textSize="17dp" />
+
+                <!--                <TextView-->
+                <!--                    android:id="@+id/payment_time"-->
+                <!--                    android:layout_width="200dp"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_below="@id/user_name"-->
+                <!--                    android:layout_toRightOf="@id/avatar_img"-->
+                <!--                    android:fontFamily="@font/poppins"-->
+                <!--                    android:paddingLeft="10dp"-->
+                <!--                    android:text="18 February 2024 at 12:10 AM"-->
+                <!--                    android:textColor="@color/cl_faint_green"-->
+                <!--                    android:textSize="12dp" />-->
+
+
+                <TextView
+                    android:id="@+id/payment_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textColor="@color/cl_green"
+                    android:textSize="19dp" />
+
+                <!--                <TextView-->
+                <!--                    android:id="@+id/payment_status"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_below="@id/payment_money"-->
+                <!--                    android:layout_alignParentRight="true"-->
+                <!--                    android:fontFamily="@font/poppins"-->
+                <!--                    android:text="success"-->
+                <!--                    android:textColor="@color/cl_green"-->
+                <!--                    android:textSize="15dp" />-->
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

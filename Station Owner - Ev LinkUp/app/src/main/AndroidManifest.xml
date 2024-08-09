@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@drawable/logo"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.EVCharging"
+        tools:targetApi="31">
+        <activity
+            android:name=".NotifyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddHistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".GetAllHistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TempActivity"
+            android:exported="false" />
+        <activity
+            android:name=".review.GetAllReveiwsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".payment.ViewAllPaymentsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EnergySold.EnergySoldChartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EnergySold.AddEnergySoldActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EvStation.GetEvStationsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EvStation.UpdateEvStationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EvStation.AddEVStationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Auth.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Auth.SplashActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Auth.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+
+        <service
+            android:name=".UserNotification.MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name=".UserNotification.MyBootReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".UserNotification.MyNotificationReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.example.crm_project.NOTIFICATION_RECEIVED" />
+            </intent-filter>
+        </receiver>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+    </application>
+
+</manifest>
