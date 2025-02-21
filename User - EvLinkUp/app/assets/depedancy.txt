@@ -1,3 +1,0 @@
-
-//    for lottifiles
-    implementation 'com.airbnb.android:lottie:6.3.0'

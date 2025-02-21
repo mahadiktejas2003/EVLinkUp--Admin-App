@@ -19,6 +19,14 @@
         android:textColor="@color/cl_green"
         android:textSize="30sp" />
 
+    <TextView
+        android:id="@+id/tvMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:visibility="gone"
+        android:gravity="center"
+        android:layout_marginTop="20dp" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
