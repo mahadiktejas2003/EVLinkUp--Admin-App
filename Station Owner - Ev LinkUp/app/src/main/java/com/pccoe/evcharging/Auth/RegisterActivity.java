@@ -16,16 +16,21 @@ import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
+import com.google.firebase.firestore.WriteBatch;
 import com.pccoe.evcharging.MainActivity;
 import com.pccoe.evcharging.databinding.ActivityRegisterBinding;
+import com.pccoe.evcharging.models.EVStation;
 import com.pccoe.evcharging.models.Owner;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 import java.util.UUID;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -50,19 +55,27 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void init() {
+        owner_pass = "-1";
+        owner_id = owner_email = owner_name = ev_station_name = "-1";
+        avg_rating = 0;
+        charging_points = 0;
+        reviews = 0;
+        price = charging_point_com_type_1 = charging_point_com_type_2 = charging_point_com_type_3 = 0;
+        owner_location = null;
+
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        owner_location = null;
-        avg_rating = 0;
-        charging_points = price = charging_point_com_type_1 = charging_point_com_type_2 = charging_point_com_type_3 = reviews = 0;
     }
 
     private void setEventListeners() {
         binding.btnFetchLocation.setOnClickListener(v -> fetchCurrentLocation());
         binding.btnRegister.setOnClickListener(v -> {
-            if (validateInputs() && processLocation()) {
+            getText();
+            if (check() == 1) {
                 createNew();
+            } else {
+                Toast.makeText(RegisterActivity.this, "All Fields are Mandatory", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -82,49 +95,6 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 })
                 .addOnFailureListener(e -> showLocationError("Location request failed"));
-    }
-
-    private boolean processLocation() {
-        String locationInput = binding.etAddress.getText().toString().trim();
-
-        if (locationInput.isEmpty()) {
-            showLocationError("Please enter location or fetch current location");
-            return false;
-        }
-
-        try {
-            // Check if input is coordinate pair
-            if (locationInput.matches("^-?\\d+\\.?\\d*,\\s*-?\\d+\\.?\\d*$")) {
-                String[] parts = locationInput.split(",");
-                double lat = Double.parseDouble(parts[0].trim());
-                double lng = Double.parseDouble(parts[1].trim());
-                owner_location = new GeoPoint(lat, lng);
-                return true;
-            } else {
-                // Geocode address string
-                return geocodeAddress(locationInput);
-            }
-        } catch (NumberFormatException e) {
-            showLocationError("Invalid coordinate format");
-            return false;
-        }
-    }
-
-    private boolean geocodeAddress(String address) {
-        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-        try {
-            List<Address> addresses = geocoder.getFromLocationName(address, 1);
-            if (!addresses.isEmpty()) {
-                Address location = addresses.get(0);
-                updateLocationUI(location.getLatitude(), location.getLongitude());
-                return true;
-            }
-            showLocationError("Location not found");
-            return false;
-        } catch (IOException e) {
-            showLocationError("Geocoding service error");
-            return false;
-        }
     }
 
     private void updateLocationUI(double latitude, double longitude) {
@@ -150,70 +120,72 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    private boolean validateInputs() {
+    private void getText() {
+        owner_id = UUID.randomUUID().toString();
         owner_email = binding.etEmail.getText().toString().trim();
         owner_pass = binding.etPass.getText().toString().trim();
         owner_name = binding.etName.getText().toString().trim();
         ev_station_name = binding.etStationName.getText().toString().trim();
-
-        if (owner_email.isEmpty() || owner_pass.isEmpty() || owner_name.isEmpty() || ev_station_name.isEmpty()) {
-            Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        try {
-            charging_points = Integer.parseInt(binding.etChargingPoints.getText().toString().trim());
-            price = Integer.parseInt(binding.etPricing.getText().toString().trim());
-            if (charging_points <= 0 || price <= 0) {
-                Toast.makeText(this, "Charging points and price must be positive numbers", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        } catch (NumberFormatException e) {
-            Toast.makeText(this, "Invalid number format", Toast.LENGTH_SHORT).show();
-            return false;
-        }
+        charging_points = Integer.parseInt(binding.etChargingPoints.getText().toString().trim());
+        price = Integer.parseInt(binding.etPricing.getText().toString().trim());
 
         charging_point_com_type_1 = binding.cbT1.isChecked() ? 1 : 0;
         charging_point_com_type_2 = binding.cbT2.isChecked() ? 1 : 0;
         charging_point_com_type_3 = binding.cbT3.isChecked() ? 1 : 0;
 
-        if ((charging_point_com_type_1 + charging_point_com_type_2 + charging_point_com_type_3) == 0) {
-            Toast.makeText(this, "Select at least one connector type", Toast.LENGTH_SHORT).show();
-            return false;
-        }
+        if (owner_email.equals("")) owner_email = "-1";
+        if (owner_pass.equals("")) owner_pass = "-1";
+        if (owner_name.equals("")) owner_name = "-1";
+        if (ev_station_name.equals("")) ev_station_name = "-1";
+        if (charging_points == 0) charging_points = 0;
+    }
 
-        return true;
+    private int check() {
+        if (owner_email.equals("-1") || owner_pass.equals("-1") || owner_name.equals("-1") || ev_station_name.equals("-1"))
+            return 0;
+        if (charging_points == 0) return 0;
+        if (owner_location == null) return 0;
+        return 1;
     }
 
     private void createNew() {
         firebaseAuth.createUserWithEmailAndPassword(owner_email, owner_pass)
                 .addOnSuccessListener(authResult -> {
                     Owner owner = new Owner(
-                            UUID.randomUUID().toString(),
-                            owner_email,
-                            owner_name,
-                            ev_station_name,
-                            0.0,
-                            owner_location,
-                            charging_points,
-                            price,
-                            charging_point_com_type_1,
-                            charging_point_com_type_2,
-                            charging_point_com_type_3,
-                            0,
-                            0
+                            owner_id, owner_email, owner_name, ev_station_name, avg_rating, owner_location,
+                            charging_points, price, charging_point_com_type_1, charging_point_com_type_2, charging_point_com_type_3, reviews, 0
                     );
 
                     firebaseFirestore.collection("Owner")
                             .document(owner_email)
                             .set(owner)
                             .addOnSuccessListener(unused -> {
-                                Toast.makeText(RegisterActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(RegisterActivity.this, MainActivity.class));
-                                finish();
+                                Toast.makeText(RegisterActivity.this, "Registered", Toast.LENGTH_SHORT).show();
+                                addChargingPoints();
                             })
-                            .addOnFailureListener(e -> Toast.makeText(RegisterActivity.this, "Firestore error: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                            .addOnFailureListener(e -> Toast.makeText(RegisterActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
                 })
-                .addOnFailureListener(e -> Toast.makeText(RegisterActivity.this, "Authentication failed: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                .addOnFailureListener(e -> Toast.makeText(RegisterActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
+    }
+
+    private void addChargingPoints() {
+        WriteBatch batch = firebaseFirestore.batch();
+        List<String> slot = new ArrayList<>(Collections.nCopies(48, ""));
+
+        for (int i = 0; i < charging_points; i++) {
+            String id = UUID.randomUUID().toString();
+            DocumentReference temp = firebaseFirestore
+                    .collection("Owner")
+                    .document(firebaseAuth.getCurrentUser().getEmail())
+                    .collection("EV_Station")
+                    .document(id);
+
+            batch.set(temp, new EVStation(id, slot));
+        }
+
+        batch.commit().addOnSuccessListener(unused -> {
+            startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+            finish();
+        }).addOnFailureListener(e -> Toast.makeText(RegisterActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 }
